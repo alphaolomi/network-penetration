@@ -1,0 +1,5 @@
+hcidump -a.
+
+#!/usr/bin/python 2 3 import sys 4 import struct 5 import bluetooth._bluetooth as bt 6 7 if len(sys.argv) < 2: 8 print sys.argv[0] + " <bdaddr>" 9 sys.exit(1) 10 11 # Split bluetooth address into it’s bytes 12 baddr = sys.argv[1].split(":") 13 14 # Open hci socket 15 sock = bt.hci_open_dev(0) 16 17 # CSR vendor command to change address 18 cmd = [ "\xc2", "\x02", "\x00", "\x0c", "\x00", "\x11", 19 "\x47", "\x03", "\x70", "\x00", "\x00", "\x01", 20 "\x00", "\x04", "\x00", "\x00", "\x00", "\x00", 21 "\x00", "\x00", "\x00", "\x00", "\x00", "\x00", 22 "\x00" ] 23 24 # Set new addr in hex 25 cmd[17] = baddr[3].decode("hex") 26 cmd[19] = baddr[5].decode("hex") 27 cmd[20] = baddr[4].decode("hex") 28 cmd[21] = baddr[2].decode("hex")
+146 9 Feeling Bluetooth on the Tooth
+29 cmd[23] = baddr[1].decode("hex") 30 cmd[24] = baddr[0].decode("hex") 31 32 # Send HCI request 33 bt.hci_send_req(sock, 34 bt.OGF_VENDOR_CMD, 35 0, 36 bt.EVT_VENDOR, 37 2000, 38 "".join(cmd)) 39 40 sock.close() 41 print "Dont forget to reset your device"

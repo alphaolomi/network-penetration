@@ -1,0 +1,1 @@
+     #!/usr/bin/python 2 3 import sys 4 import httplib2 5 6 if len(sys.argv) < 3: 7 print sys.argv[0] + ": &lt;url&gt; <key> <value>" 8 sys.exit(1) 9 10 webclient = httplib2.Http() 11 headers = {’Cookie’: sys.argv[2] + ’=’ + sys.argv[3]} 12 response, content = webclient.request(sys.argv[1], 13 ’GET’, 14 headers=headers) 15 print content 

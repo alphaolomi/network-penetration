@@ -1,0 +1,2 @@
+To be able to install the Python modules you maybe need to setup the bluetooth libraries ﬁrst. On Debian or Ubuntu this is done by executing
+apt-get install libbluetooth

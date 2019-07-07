@@ -1,0 +1,1 @@
+in Wireshark e.g. wlan.fc.subtype!=8 drops all beacon packets. 

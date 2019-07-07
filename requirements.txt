@@ -1,0 +1,9 @@
+impacket
+pcapy
+scapy
+httplib2
+BeautifulSoup
+lightblue
+tailer
+google
+pythonwifi

@@ -1,0 +1,4 @@
+#!/usr/bin/python2 2 3 
+# Imagine you are successfully connectedto a network, but lack an IP address. Some networksdon’tdeliverthemfreelytoyourdeviceviaDHCP andsometimesthereis no client to ﬁnd out the IP frame by looking at its conﬁguration. In such a case an attacker could try to use brute force an IP. 
+# 
+# import os 4 import re 5 import sys 6 from random import randint 7 8 device = "wlan0" 9 ips = range(1,254) 10 11 def ping_ip(ip): 12 fh = os.popen("ping -c 1 -W 1 " + ip) 13 resp = fh.read() 14 15 if re.search("bytes from", resp, re.MULTILINE): 16 print "Got response from " + ip 17 sys.exit(0) 18 19 while len(ips) > 0: 20 host_byte = randint(2, 253) 21 idx = randint(0, len(ips) - 1) 22 ip = ips[idx] 23 del ips[idx] 24 25 print "Checking net 192.168." + str(ip) + ".0" 26 cmd = "ifconfig " + device + " 192.168." + str(ip) + \ 27 "." + str(host_byte) + " up" 28 os.system(cmd) 29 ping_ip("192.168." + str(ip) + ".1") 30 ping_ip("192.168." + str(ip) + ".254") 

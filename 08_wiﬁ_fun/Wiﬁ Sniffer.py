@@ -1,0 +1,3 @@
+ #!/usr/bin/python 2 3 import os 4 from scapy.all import * 5 6 iface = "wlan0" 7 8 os.system("/usr/sbin/iwconfig " + iface + " mode monitor") 9 10 # Dump packets that are not beacons, probe request / responses 11 def dump_packet(pkt): 12 if not pkt.haslayer(Dot11Beacon) and \ 13 not pkt.haslayer(Dot11ProbeReq) and \ 14 not pkt.haslayer(Dot11ProbeResp): 15 print pkt.summary() 16 17 if pkt.haslayer(Raw): 18 print hexdump(pkt.load)
+118 8 Wiﬁ Fun
+19 print "\n" 20 21 22 while True: 23 for channel in range(1, 14): 24 os.system("/usr/sbin/iwconfig " + iface + \ 25 " channel " + str(channel)) 26 print "Sniffing on channel " + str(channel) 27 28 sniff(iface=iface, 29 prn=dump_packet, 30 count=10, 31 timeout=3, 32 store=0) 

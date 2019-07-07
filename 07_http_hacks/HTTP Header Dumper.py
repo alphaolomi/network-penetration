@@ -1,0 +1,1 @@
+ #!/usr/bin/python 2 3 import sys 4 import httplib2 5 6 if len(sys.argv) < 2: 7 print sys.argv[0] + ": <url>" 8 sys.exit(1) 9 10 webclient = httplib2.Http() 11 header, content = webclient.request(sys.argv[1], "GET") 12 13 for field, value in header.items(): 14 print field + ": " + value 

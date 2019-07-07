@@ -1,0 +1,1 @@
+#!/usr/bin/python 2 3 import sys 4 import httplib2 5 6 if len(sys.argv) < 2: 7 print sys.argv[0] + ": <url>" 8 sys.exit(1) 9 10 headers = {’Referer’: ’http://www.peter-lustig.com’} 11 webclient = httplib2.Http() 12 response, content = webclient.request(sys.argv[1], 13 ’GET’, 14 headers=headers) 15 print content 
