@@ -34,4 +34,4 @@ Some of the required python modules in teh scripts
 
 ## Author
 
-Alpha 😊 ([https://alphaolomi.com](https://alphaolomim.com)) Developing Mindset
+- [**Alpha Olomi**](http://alphaolomi.com) Developing Mindset
